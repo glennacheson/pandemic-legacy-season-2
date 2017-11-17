@@ -97,15 +97,21 @@ var allCities = new Vue({
       this.cities[index].draw++;
     },
     subtractDraw: function (index) {
-      this.cities[index].draw--;
+      if (this.cities[index].draw > 0) {
+        this.cities[index].draw--;
+      }
     },
     addDiscard: function (index) {
-      this.cities[index].draw--;
+      if (this.cities[index].draw > 0) {
+        this.cities[index].draw--;
+      }
       this.cities[index].discard++;
     },
     subtractDiscard: function (index) {
       this.cities[index].draw++;
-      this.cities[index].discard--;
+      if (this.cities[index].discard > 0) {
+        this.cities[index].discard--;
+      }
     }
   }
 });
