@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Pandemic Legacy - Season 2</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue"></script>
+
+    <style>
+      html,body {
+        font-size: 20px;
+      }
+      .cityName {
+        font-size: 24px;
+      }
+
+      .cardCount {
+        padding: 0px 5px 0px 5px;
+        font-size: 20px;
+      }
+          
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <h1 class="text-centered">Pandemic Legacy <small>Season 2</small></h1>
+  <div class="container" id="allCities">
+      <div class="row">
+        <button class="btn btn-success" @click="addCity">Add City</button>
+      </div>
+      <div class="row">
+        <table class="table table-striped">
+          <thead class="thead-light">
+              <tr>
+                  <th>City</th>
+                  <th>Draw Pile</th>
+                  <th>Discard Pile</th>
+                  <th></th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(city, index) in cities">
+              <td>
+                <span class="cityName">{{city.name}}</span>
+                <input type="text" v-model.lazy="city.name" v-if="city.name === '' " placeholder="Name">
+              </td>
+              <td>
+                <button class="btn btn-info" @click="subtractDraw(index)">
+                  <span class="glyphicon glyphicon-minus-sign"></span>
+                </button>
+                <span class="cardCount"> {{city.draw}} </span>
+                <button class="btn btn-success" @click="addDraw(index)">
+                  <span class="glyphicon glyphicon-plus-sign"></span>
+                </button>
+              </td>
+              <td>
+                <button class="btn btn-info" @click="subtractDiscard(index)">
+                    <span class="glyphicon glyphicon-minus-sign"></span>
+                </button> 
+                <span class="cardCount"> {{city.discard}} </span>
+                <button class="btn btn-success" @click="addDiscard(index)">
+                    <span class="glyphicon glyphicon-plus-sign"></span>
+                </button>
+              </td>
+              <td>
+                 <button class="btn btn-danger" @click="removeCity(index)">X</button>
+              </td>
+            </tr>
+          </tbody>
+      </table>
+      </div>
+  </div>
+</nav>
+<script>
+var allCities = new Vue({
+  el: '#allCities',
+  data: {
+    cities: [
+        { "name": "Washington", "draw": 3, "discard": 0 },
+        { "name": "New York", "draw": 3, "discard": 0 },
+        { "name": "London", "draw": 3, "discard": 0 },
+        { "name": "Jacksonville", "draw": 3, "discard": 0 }
+      ]
+    },
+  methods: {
+    addCity: function () {
+      this.cities.push({ "name": "", "draw": 3, "discard": 0 });
+    },
+    removeCity: function (index) {
+      this.cities.splice(index, 1);
+    },
+    addDraw: function (index) {
+      this.cities[index].draw++;
+    },
+    subtractDraw: function (index) {
+      this.cities[index].draw--;
+    },
+    addDiscard: function (index) {
+      this.cities[index].draw--;
+      this.cities[index].discard++;
+    },
+    subtractDiscard: function (index) {
+      this.cities[index].draw++;
+      this.cities[index].discard--;
+    }
+  }
+});
+</script>
+
+</body>
+</html>
